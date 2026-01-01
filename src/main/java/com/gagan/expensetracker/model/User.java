@@ -3,6 +3,8 @@ package com.gagan.expensetracker.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -22,5 +24,14 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    private String password; // (Later can be encrypted)
+    @Column(nullable = false)
+    private String password;  // BCrypt encrypted
+
+    // A user can have many categories
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Category> categories;
+
+    // A user can have many expenses
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Expense> expenses;
 }

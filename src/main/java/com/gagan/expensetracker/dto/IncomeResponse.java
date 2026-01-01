@@ -3,11 +3,9 @@ package com.gagan.expensetracker.dto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record ExpenseResponse(
+public record IncomeResponse(
         Long id,
         BigDecimal amount,
-        LocalDateTime expenseDate,
-        Long categoryId,
-        String categoryName,
-        String note
+        LocalDateTime date,
+        String source
 ) {}

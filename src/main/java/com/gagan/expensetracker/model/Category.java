@@ -19,6 +19,8 @@ public class Category {
     @Column(nullable = false)
     private String name;
 
-    // (Optional: If each user can have their own categories)
-    private Long userId;
+    // Each category belongs to a user
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

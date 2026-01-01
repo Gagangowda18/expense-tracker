@@ -5,7 +5,7 @@ import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @Entity
@@ -24,15 +24,26 @@ public class Expense {
     @Column(nullable = false)
     private BigDecimal amount;
 
+    // ⬅ UPDATED: store date + time from Gmail
     @Column(nullable = false)
-    private LocalDate expenseDate;
+    private LocalDateTime expenseDate;
 
+    // Category Relationship
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     private String note;
-    private Long userId;
+
+    // User Relationship
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    // Prevent duplicate Gmail imports
+    @Column(unique = true)
+    private String transactionRefId;
+
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
 
